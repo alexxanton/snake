@@ -1,10 +1,7 @@
 #include <ncurses.h>
+#include "snake.h"
 
 int	main()
 {
-	initscr();
-	noecho();
-	keypad(stdscr, TRUE);
-
-	echo();
+	start_game();
 }
