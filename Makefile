@@ -6,10 +6,14 @@ RM = rm -f
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(SOURCES:.c=.o)
 
-#$(NAME): $(OBJECTS)
+$(NAME): $(OBJECTS)
+	make -C libft
+	cp libft/libft.a libft.a
+	$(CC) $(CFLAGS) $(OBJECTS) libft.a -o $(NAME) -lncurses
+	rm libft.a
 
 %.o: %.c
-	$(CC) $(CFLAGS) $< -0 $@ -lncurses
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 

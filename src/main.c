@@ -1,5 +1,5 @@
 #include <ncurses.h>
-#include "snake.h"
+#include "../snake.h"
 
 int	main()
 {
