@@ -3,6 +3,7 @@
 
 void draw_snake(int y, int x)
 {
+	clear();
 	mvaddch(y, x + (x - 1), 'o');
 	mvaddch(1, 1, ' ');
 	refresh();
