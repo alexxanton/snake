@@ -47,6 +47,8 @@ t_tail *taillast(t_tail *tail)
 {
 	while (tail)
 	{
+		if (!tail->next)
+			return (tail);
 		tail = tail->next;
 	}
 	return (tail);
