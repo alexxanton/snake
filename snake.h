@@ -2,6 +2,7 @@
 # define SNAKE_H
 # include <ncurses.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 typedef struct s_tail
 {
@@ -20,5 +21,8 @@ void taildelone(t_tail *tail, void (*del)(void*));
 void tailclear(t_tail **tail, void (*del)(void*));
 void tailiter(t_tail *tail, void (*f)(int, int));
 t_tail *tailmap(t_tail *tail, void *(*f)(void *), void (*del)(void *));
+
+void clear_screen(int x, int y);
+void put_char(int x, int y, char c);
 
 #endif

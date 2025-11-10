@@ -3,24 +3,25 @@
 void draw_snake(t_tail *tail, char c)
 {
 	//clear();
-	put_char(tail->y, tail->x, c);
-	put_char(1, 1, ' ');
+	mvaddch(tail->y, tail->x + (tail->x - 1), c);
+	mvaddch(1, 1, ' ');
 	//refresh();
 }
 
 int update_snake(t_tail *tail, int hdir, int vdir, int apple_x, int apple_y)
 {
 	t_tail *next;
-	bool updating_snake = true;
 	bool apple_eaten = false;
 
-	while (updating_snake)
+	while (tail)
 	{
 		if (tail->next)
 		{
 			next = tail->next;
 			tail->x = next->x;
 			tail->y = next->y;
+			//if (tail->x == apple_x && tail->y == apple_y)
+			//	mvaddch(20, 20, 'i');
 			tail = next;
 		}
 		else
@@ -29,16 +30,22 @@ int update_snake(t_tail *tail, int hdir, int vdir, int apple_x, int apple_y)
 			tail->y += vdir;
 			if (tail->x == apple_x && tail->y == apple_y)
 				apple_eaten = true;
-			put_char(20, 30, tail->x + (tail->x < 10 ? 48 : 55));
-			put_char(20, 40, tail->y + (tail->y < 10 ? 48 : 55));
-			updating_snake = false;
+			mvaddch(20, 30, tail->x + (tail->x < 10 ? 48 : 55));
+			mvaddch(20, 40, tail->y + (tail->y < 10 ? 48 : 55));
+			tail = tail->next;
 		}
-		if (tail->x == apple_x && tail->y == apple_y)
-			draw_snake(tail, 'O');
-		else
 			draw_snake(tail, 'o');
 	}
 	return (apple_eaten);
+}
+
+void clear_screen(int x, int y)
+{
+	for (int i = 0; i < y; i++)
+	{
+		for (int j = 0; j < x; j++)
+			mvaddch(i, j, ' ');
+	}
 }
 
 void start_game()
@@ -57,7 +64,7 @@ void start_game()
 		if (newx != x || newy != y)
 			getmaxyx(stdscr, y, x);
 		clear_screen(x, y);
-		put_char(apple_y, apple_x, '.');
+		mvaddch(apple_y, apple_x + apple_x - 1, '.');
 		if (update_snake(tail, hdir, vdir, apple_x, apple_y))
 			tailadd_front(&tail, tailnew(0, 0));
 		refresh();
